@@ -2,6 +2,7 @@ module LocalTimeHelper
   DEFAULT_FORMAT = '%B %e, %Y %l:%M%P'
 
   def local_time(time, options = nil)
+    return unless time
     time = utc_time(time)
 
     options, format = extract_options_and_value(options, :format)
@@ -14,12 +15,14 @@ module LocalTimeHelper
   end
 
   def local_date(time, options = nil)
+    return unless time
     options, format = extract_options_and_value(options, :format)
     options[:format] = format || '%B %e, %Y'
     local_time time, options
   end
 
   def local_relative_time(time, options = nil)
+    return unless time
     time = utc_time(time)
     options, type = extract_options_and_value(options, :type)
 
@@ -30,12 +33,14 @@ module LocalTimeHelper
   end
 
   def local_time_ago(time, options = nil)
+    return unless time
     options, type = extract_options_and_value(options, :type)
     options[:type] = 'time-ago'
     local_relative_time time, options
   end
 
   def utc_time(time_or_date)
+    return unless time_or_date
     if time_or_date.respond_to?(:in_time_zone)
       time_or_date.in_time_zone.utc
     else
